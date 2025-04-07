@@ -72,13 +72,23 @@ const ChatContainer = () => {
               </time>
             </div>
             <div className="chat-bubble flex flex-col">
-              {message.image && (
-                <img
-                  src={message.image}
-                  alt="Attachment"
-                  className="sm:max-w-[200px] rounded-md mb-2"
-                />
-              )}
+            {message.image && (
+  <>
+    <img
+      src={message.image}
+      alt="Attachment"
+      className="sm:max-w-[200px] rounded-md mb-2"
+    />
+    <button
+      onClick={() => handleImageDownload(message.image, `image-${message._id}.jpg`)}
+      className="text-xs text-blue-500 hover:underline text-left mb-1"
+    >
+      Download
+    </button>
+  </>
+)}
+
+
               {message.text && <p>{message.text}</p>}
             </div>
           </div>
@@ -89,4 +99,22 @@ const ChatContainer = () => {
     </div>
   );
 };
+const handleImageDownload = async (imageUrl, fileName = "download.jpg") => {
+  try {
+    const response = await fetch(imageUrl, { mode: "cors" });
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  } catch (err) {
+    console.error("Download error:", err);
+  }
+};
+
 export default ChatContainer;
