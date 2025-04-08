@@ -19,7 +19,8 @@ const NoChatSelected = () => {
         {/* Welcome Text */}
         <h2 className="text-2xl font-bold">Welcome to TalkSpace!</h2>
         <p className="text-base-content/60">
-          Select a conversation from the sidebar to start chatting
+          Select a conversation from the sidebar to start chatting powered by
+          <span className="text-primary font-semibold">Suchit Gourkhede</span>.
         </p>
       </div>
     </div>
